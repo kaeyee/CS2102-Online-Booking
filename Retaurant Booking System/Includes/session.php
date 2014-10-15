@@ -16,6 +16,5 @@
         $statement-> execute();
         $result= $statement-> get_result();
         return $result;
-
     }
 ?>
