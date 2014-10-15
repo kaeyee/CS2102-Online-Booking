@@ -7,6 +7,7 @@
     <head>
         <meta charset="utf-8" />
         <title>CKY Restaurant Online Booking</title>
+         <link href="/Styles/StyleSheet.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div>

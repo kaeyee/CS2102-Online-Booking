@@ -15,7 +15,7 @@
         $query = "INSERT INTO user(Email_Address, First_Name, Last_Name, Salutation, Password, Phone_Number, Created_On) VALUES (?, ?, ?, ?, ?, ?, ?) ";
 
         $statement = $databaseConnection -> prepare($query);
-        $statement -> bind_param('sssssss', $salutation, $fName, $lName, $email, $password, $phoneNum, $createdOn);
+        $statement -> bind_param('sssssss', $email, $fName, $lName, $salutation, $password, $phoneNum, $createdOn);
         $statement ->execute();
         $statement ->store_result();
     }
@@ -27,7 +27,7 @@
         <hr/>
     </div>
     
-    
+    Still need to do validation mandatory field!!!
     <form action="signup.php" method="post">
         <fieldset>
             <legend>Register</legend>
