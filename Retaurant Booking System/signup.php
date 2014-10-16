@@ -24,15 +24,12 @@
 <div id="main">
     <div>
         <h2>Sign Up to Be Our Member Now!!!</h2>
-        <hr/>
     </div>
-    
-    Still need to do validation mandatory field!!!
-    <form action="signup.php" method="post">
+    <form id="signupForm" action="signup.php" method="post" >
         <fieldset>
             <legend>Register</legend>
             <label for="salutation">Salutation:</label>
-            <select name="salutation">
+            <select name="salutation" id="salutation">
                 <option value="Dr">Dr</option>
                 <option value="Mr">Mr</option>
                 <option value="Mrs">Mrs</option>
@@ -54,7 +51,7 @@
             <label for="phoneNum">Phone Number:</label>
             <input type="number" name="phoneNum" id="phoneNum"/>
             <br><br>
-            <input type="submit" name="submit" value="Submit" />
+            <input type="submit" name="submit" id="btnSubmit" value="Submit" onclick="checkEmpty()" />
 
             <p>
                     <a href="index.php">Cancel</a>
@@ -68,3 +65,30 @@
     include ("Includes/footer.php");    
 
 ?>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#signupForm").submit(function (event) {
+            if ($("#fName").val().length == 0) {
+                alert("First Name is required");
+                event.preventDefault();
+            }
+            else if ($("#lName").val().length == 0) {
+                alert("Last Name is required");
+                event.preventDefault();
+            }
+            else if ($("#email").val().length == 0) {
+                alert("Email Address is required");
+                event.preventDefault();
+            }
+            else if ($("#password").val().length == 0) {
+                alert("Password is required");
+                event.preventDefault();
+            }
+            else if ($("#phoneNum").val().length == 0) {
+                alert("Phone Number is required");
+                event.preventDefault();
+            }
+        })
+    })
+</script>
