@@ -1,7 +1,13 @@
 <?php
+    require_once ("Includes/session.php");
     require_once ("DB/DBCre.php");
     require_once ("DB/connectDB.php");
     include("Includes/header.php");
+
+    //need to be add after a logout function is done
+    //if(!empty($_SESSION['email'])){
+    //    header("Location: index.php");
+    //}
 
     if (isset($_POST['submit'])){
         $salutation = $_POST['salutation'];
@@ -18,6 +24,8 @@
         $statement -> bind_param('sssssss', $email, $fName, $lName, $salutation, $password, $phoneNum, $createdOn);
         $statement ->execute();
         $statement ->store_result();
+
+        header("Location: index.php");
     }
 ?>
 

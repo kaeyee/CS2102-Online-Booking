@@ -4,7 +4,7 @@
 
     function logged_on()
     {
-        return isset($_SESSION['email']);   
+        return isset($_SESSION['lName']);   
     }
 
     function is_admin()
