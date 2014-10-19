@@ -7,24 +7,55 @@
     if(!$_SESSION['email']){
         header("Location:login.php");
     }
+
+    if (isset($_POST['submit']))
+    {
+        $fName = $_POST['fname'];
+        $lName = $_POST['lName'];
+        $phoneNum = $_POST['phoneNum'];
+        $email = $_SESSION['email'];
+        $location = $_POST['location'];
+        $date = $_POST['date'];
+        $time = $_POST['time'];
+        $numPax = $_POST['numPax'];
+        $remark = $_POST['remark'];
+        $createdOn = date('Y-m-d H:i:s');
+
+        $recordQuery = "INSERT INTO booking_record(Email_Address,Time, Date, No_Pax, Location, Remark, Created_On) VALUES (?, ?, ?, ?, ?, ?, ?) ";
+        $recordStatement = $databaseConnection -> prepare($recordQuery);
+        $recordStatement -> bind_param('sisisss', $email, $time, $date, $numPax, $location, $remark, $createdOn);
+        $recordStatement -> execute();
+        $recordStatement -> store_result();
+
+        $creationWasSuccessful = $recordStatement->affected_rows == 1 ? true : false;
+        if ($creationWasSuccessful)
+        {
+            echo "Successful!";
+        }
+        else{
+            echo "Fail";
+        }
+
+    }
     ?>
 
 <div id="main">
-    <h2>Booking for a seat now!</h2>
+    <h2>Book a seat now!</h2>
+    Still need to do the date range for date selection
     <form id="formBooking" action="booking.php" method="post">
         <fieldset>
         <legend>Booking</legend>
             <label for="fName">First Name: </label>
-            <input type="text" id="txtFName"/>
+            <input type="text" id="txtFName" name="fName"/>
             <br><br>
             <label for="lName">Last Name: </label>
-            <input type="text" id="txtLName"/>
+            <input type="text" id="txtLName" name="lName"/>
             <br><br>
             <label for="phoneNum">Contact: </label>
-            <input type="text" id="txtPhoneNum"/>
+            <input type="text" id="txtPhoneNum" name="phoneNum"/>
             <br><br>
             <label for="email">Email Address: </label>
-            <input type="text" id="txtEmail" disabled/>
+            <input type="text" id="txtEmail" name="email" disabled/>
             <br><br>
             <label for="location">Location: </label>
             <select name="location" id="location">
@@ -44,10 +75,10 @@
             </select>
             <br><br>
             <label for="bookingDate">Date: </label>
-            <input type="date" id="txtDate"/>
+            <input type="date" id="txtDate" name="date"/>
             <br><br>
             <label for="bookingTime">Time: </label>
-            <select name="time">
+            <select name="time" id="time">
                 <option value="" disabled>Lunch</option>
                 <option value="1130">11:30</option>
                 <option value="1200">12:00</option>
@@ -83,7 +114,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var message="";
+        var message = "";
         $.ajax({
             type: "POST",
             url: "/getDetails.php",
@@ -95,12 +126,11 @@
                 $("#txtPhoneNum").val(result.phoneNum);
             }
         });
-        
+
 
         $("#formBooking").submit(function (event) {
             if ($("#txtFName").val().length == 0) {
                 message = message + "First Name is required.\n";
-                alert("hi");
             }
             if ($("#txtLName").val().length == 0) {
                 message = message + "Last Name is required.\n";
@@ -117,7 +147,7 @@
             if ($("#txtDate").val().length == 0) {
                 message = message + "Date is required.\n";
             }
-            if ($("#Time").val().length == 0) {
+            if ($("#time").val().length == 0) {
                 message = message + "Booking time is required.\n";
             }
             if ($("#numPax").val().length == 0) {
@@ -127,6 +157,7 @@
                 alert(message);
                 event.preventDefault();
             }
+            message = "";
         });
     })
 
