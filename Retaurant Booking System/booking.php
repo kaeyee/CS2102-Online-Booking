@@ -75,7 +75,7 @@
             </select>
             <br><br>
             <label for="bookingDate">Date: </label>
-            <input type="date" id="txtDate" name="date"/>
+            <input type="date" id="txtDate" name="date" min="2014-10-20"/>
             <br><br>
             <label for="bookingTime">Time: </label>
             <select name="time" id="time">
@@ -115,6 +115,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var message = "";
+        var today = new Date();
+        today.setDate(today.getDate() + 1);
+        var d= today.toISOString().split('T')[0];
+        $("#txtDate")[0].setAttribute('min', d);
         $.ajax({
             type: "POST",
             url: "/getDetails.php",
