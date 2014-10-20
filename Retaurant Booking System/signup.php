@@ -4,10 +4,10 @@
     require_once ("DB/connectDB.php");
     include("Includes/header.php");
 
-    //need to be add after a logout function is done
-    //if(!empty($_SESSION['email'])){
-    //    header("Location: index.php");
-    //}
+    
+    if(!empty($_SESSION['email'])){
+        header("Location: index.php");
+    }
 
     if (isset($_POST['submit'])){
         $salutation = $_POST['salutation'];
@@ -18,23 +18,34 @@
         $phoneNum = $_POST['phoneNum'];
         $createdOn = date('Y-m-d H:i:s');
 
-        $query = "INSERT INTO user(Email_Address, First_Name, Last_Name, Salutation, Password, Phone_Number, Created_On) VALUES (?, ?, ?, ?, ?, ?, ?) ";
+        $checkQuery ="SELECT * FROM user where Email_Address = ?";
+        $chkStatement = $databaseConnection -> prepare($checkQuery);
+        $chkStatement -> bind_param('s', $email);
+        $chkStatement -> execute();
+        $chkStatement -> store_result();
 
-        $statement = $databaseConnection -> prepare($query);
-        $statement -> bind_param('sssssss', $email, $fName, $lName, $salutation, $password, $phoneNum, $createdOn);
-        $statement ->execute();
-        $statement ->store_result();
+        if($chkStatement -> num_rows > 0)
+        {
+            echo "Email Address has been used by another account. <br>";
+            echo "Please provide another email address.";
+        }
+        else{
+            $query = "INSERT INTO user(Email_Address, First_Name, Last_Name, Salutation, Password, Phone_Number, Created_On) VALUES (?, ?, ?, ?, ?, ?, ?) ";
 
-        header("Location: index.php");
+            $statement = $databaseConnection -> prepare($query);
+            $statement -> bind_param('sssssss', $email, $fName, $lName, $salutation, $password, $phoneNum, $createdOn);
+            $statement ->execute();
+            $statement ->store_result();
+
+            header("Location: index.php");
+        }
     }
 ?>
-do a search function on email
 
 <div id="main">
     <div>
         <h2>Sign Up to Be Our Member Now!!!</h2>
     </div>
-    do checking on valid email, password min length, phone number 8 digits.
     <form id="signupForm" action="signup.php" method="post" >
         <fieldset>
             <legend>Register</legend>
@@ -59,7 +70,7 @@ do a search function on email
             <input type="password" name="password" id="password"/>
             <br><br>
             <label for="phoneNum">Phone Number:</label>
-            <input type="number" name="phoneNum" id="phoneNum"/>
+            <input type="text" name="phoneNum" id="phoneNum"/>
             <br><br>
             <input type="submit" name="submit" id="btnSubmit" value="Submit" />
 
@@ -81,28 +92,44 @@ do a search function on email
         var message = "";
         $("#signupForm").submit(function (event) {
             if ($("#fName").val().length == 0) {
-                message=message+"First Name is required.\n";
+                message = message + "First Name is required.\n";
             }
             if ($("#lName").val().length == 0) {
-                message = message+ "Last Name is required.\n";
+                message = message + "Last Name is required.\n";
             }
             if ($("#email").val().length == 0) {
-                message=message+"Email Address is required.\n";
+                message = message + "Email Address is required.\n";
             }
             if ($("#password").val().length == 0) {
-                message=message+"Password is required.\n";
+                message = message + "Password is required.\n";
             }
             if ($("#phoneNum").val().length == 0) {
-                message=message+"Phone Number is required.\n";
+                message = message + "Phone Number is required.\n";
             }
-
-             if (message.length > 0) {
+            if (!IsEmail($("#email").val())) {
+                message = message + "Invalid email format.\n";
+            }
+            if ($("#password").val().length < 6) {
+                message = message + "Password must be at least six characters.\n";
+            }
+            if (!IsPhoneNum($("#phoneNum").val()) || $("#phoneNum").val().length != 8) {
+                message = message + "Invalid phone number format.\n";
+            }
+            if (message.length > 0) {
                 alert(message);
                 event.preventDefault();
             }
             message = "";
-            
-
-        })
+        });
     })
+
+    function IsEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+
+    function IsPhoneNum(txtPhone) {
+        var filter = /^[0-9]+$/;
+        return filter.test(txtPhone);
+    }
 </script>

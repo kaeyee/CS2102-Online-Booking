@@ -10,7 +10,7 @@
     $statement -> execute();
     $statement -> store_result();
 
-    if($statement-> num_rows ==1){
+    if($statement -> num_rows == 1){
         $statement -> bind_result($fName, $lName, $phoneNum);
         $statement -> fetch();
 
