@@ -4,7 +4,7 @@
     require_once ("DB/connectDB.php");
     include("Includes/header.php");
 
-    
+    // Check if the user has logged in
     if(!empty($_SESSION['email'])){
         header("Location: index.php");
     }

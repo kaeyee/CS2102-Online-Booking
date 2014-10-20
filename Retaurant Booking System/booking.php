@@ -4,6 +4,7 @@
     require_once ("DB/connectDB.php");
     include("Includes/header.php");
 
+    // Same as "empty($_SESSION['email'])"?
     if(!$_SESSION['email']){
         header("Location:login.php");
     }
@@ -35,9 +36,9 @@
         else{
             echo "Fail";
         }
-
     }
     ?>
+
 
 <div id="main">
     <h2>Book a seat now!</h2>
@@ -98,7 +99,8 @@
             </select>
             <br><br>
             <label for="remark">Remark: </label>
-            <textarea name="remark" id="txtremark" rows="5" cols="40"></textarea>
+            <textarea name="remark" id="txtremark" rows="5" cols="40" onkeyup="textCounter(this.form.remark, this.form.countDisplay)" onkeydown="textCounter(this.form.remark, this.form.countDisplay)"></textarea>
+            <input name="countDisplay" type="text" size="3" value="80" readonly /> Characters Remaining
             <br><br>
             <input type="submit" value="Submit" name="submit" id="submit"/>
         </fieldset>
@@ -180,5 +182,16 @@
         var filter = /^[0-9]+$/;
         return filter.test(txtPhone);
     }
+	
+ 
+	var maxLength = 80;
+		
+	function textCounter(ta, cd){
+		if(ta.value.length > maxLength){
+			ta.value = ta.value.substring(0, maxLength);
+		}else{
+			cd.value = maxLength - ta.value.length;
+		}
+	}
 
 </script>

@@ -11,9 +11,12 @@
             <div>
                 <p> <a href="/login.php"> Log In here!</a></p>
                 <p> <a href="/signup.php"> Sign up here!</a></p>
+                <p> <a href="/booking.php"> Book Tables here!</a></p>
+                <p> <a href="/logout.php"> Log out here!</a></p>
             </div>
         </div>
-
+    </body>
+</html>
 <?php
     include ("Includes/footer.php");    
 

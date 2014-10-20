@@ -21,6 +21,7 @@
 
         if($statement->num_rows ==1)
         {
+            // why get last name?
             $statement-> bind_result($_SESSION['lName'], $_SESSION['email'], $_SESSION['isAdmin']);
             $statement -> fetch();
             header("Location:booking.php"); 
