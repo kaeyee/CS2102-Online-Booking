@@ -159,10 +159,10 @@
             if ($("#numPax").val().length == 0) {
                 message = message + "No. of Pax is required.\n";
             }
-            if (!IsEmail($("#email").val())) {
+            if (!IsEmail($("#txtEmail").val())) {
                 message = message + "Invalid email format.\n";
             }
-            if (!IsPhoneNum($("#phoneNum").val()) || $("#phoneNum").val().length != 8) {
+            if (!IsPhoneNum($("#txtPhoneNum").val()) || $("#txtPhoneNum").val().length != 8) {
                 message = message + "Invalid phone number format.\n";
             }
             if (message.length > 0) {
