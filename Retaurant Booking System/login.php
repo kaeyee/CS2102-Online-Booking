@@ -23,7 +23,7 @@
         {
             $statement-> bind_result($_SESSION['lName'], $_SESSION['email']);
             $statement -> fetch();
-            header("Location: index.php");
+            header("Location:booking.php"); 
         }
         else
         {
