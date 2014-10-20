@@ -13,7 +13,7 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $query ="SELECT Last_Name, Email_Address from user WHERE Email_Address = ? AND Password = ? LIMIT 1";
+        $query ="SELECT Last_Name, Email_Address, Is_Admin from user WHERE Email_Address = ? AND Password = ? LIMIT 1";
         $statement = $databaseConnection -> prepare($query);
         $statement -> bind_param('ss', $email, $password);
         $statement -> execute();
@@ -21,7 +21,7 @@
 
         if($statement->num_rows ==1)
         {
-            $statement-> bind_result($_SESSION['lName'], $_SESSION['email']);
+            $statement-> bind_result($_SESSION['lName'], $_SESSION['email'], $_SESSION['isAdmin']);
             $statement -> fetch();
             header("Location:booking.php"); 
         }

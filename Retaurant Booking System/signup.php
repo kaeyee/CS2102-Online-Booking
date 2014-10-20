@@ -59,7 +59,7 @@
             <label for="phoneNum">Phone Number:</label>
             <input type="number" name="phoneNum" id="phoneNum"/>
             <br><br>
-            <input type="submit" name="submit" id="btnSubmit" value="Submit" onclick="checkEmpty()" />
+            <input type="submit" name="submit" id="btnSubmit" value="Submit" />
 
             <p>
                     <a href="index.php">Cancel</a>
@@ -76,27 +76,31 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var message = "";
         $("#signupForm").submit(function (event) {
             if ($("#fName").val().length == 0) {
-                alert("First Name is required");
+                message=message+"First Name is required.\n";
+            }
+            if ($("#lName").val().length == 0) {
+                message = message+ "Last Name is required.\n";
+            }
+            if ($("#email").val().length == 0) {
+                message=message+"Email Address is required.\n";
+            }
+            if ($("#password").val().length == 0) {
+                message=message+"Password is required.\n";
+            }
+            if ($("#phoneNum").val().length == 0) {
+                message=message+"Phone Number is required.\n";
+            }
+
+             if (message.length > 0) {
+                alert(message);
                 event.preventDefault();
             }
-            else if ($("#lName").val().length == 0) {
-                alert("Last Name is required");
-                event.preventDefault();
-            }
-            else if ($("#email").val().length == 0) {
-                alert("Email Address is required");
-                event.preventDefault();
-            }
-            else if ($("#password").val().length == 0) {
-                alert("Password is required");
-                event.preventDefault();
-            }
-            else if ($("#phoneNum").val().length == 0) {
-                alert("Phone Number is required");
-                event.preventDefault();
-            }
+            message = "";
+            
+
         })
     })
 </script>
