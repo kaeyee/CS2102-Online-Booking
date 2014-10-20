@@ -41,7 +41,6 @@
 
 <div id="main">
     <h2>Book a seat now!</h2>
-    Still need to do the date range for date selection
     <form id="formBooking" action="booking.php" method="post">
         <fieldset>
         <legend>Booking</legend>
@@ -119,6 +118,7 @@
         today.setDate(today.getDate() + 1);
         var d= today.toISOString().split('T')[0];
         $("#txtDate")[0].setAttribute('min', d);
+        
         $.ajax({
             type: "POST",
             url: "/getDetails.php",

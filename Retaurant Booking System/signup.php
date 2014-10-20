@@ -28,11 +28,13 @@
         header("Location: index.php");
     }
 ?>
+do a search function on email
 
 <div id="main">
     <div>
         <h2>Sign Up to Be Our Member Now!!!</h2>
     </div>
+    do checking on valid email, password min length, phone number 8 digits.
     <form id="signupForm" action="signup.php" method="post" >
         <fieldset>
             <legend>Register</legend>
