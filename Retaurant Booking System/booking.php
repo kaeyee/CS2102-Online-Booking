@@ -157,6 +157,12 @@
             if ($("#numPax").val().length == 0) {
                 message = message + "No. of Pax is required.\n";
             }
+            if (!IsEmail($("#email").val())) {
+                message = message + "Invalid email format.\n";
+            }
+            if (!IsPhoneNum($("#phoneNum").val()) || $("#phoneNum").val().length != 8) {
+                message = message + "Invalid phone number format.\n";
+            }
             if (message.length > 0) {
                 alert(message);
                 event.preventDefault();
@@ -164,5 +170,15 @@
             message = "";
         });
     })
+
+    function IsEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+
+    function IsPhoneNum(txtPhone) {
+        var filter = /^[0-9]+$/;
+        return filter.test(txtPhone);
+    }
 
 </script>

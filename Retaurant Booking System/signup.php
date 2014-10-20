@@ -73,10 +73,9 @@
             <input type="text" name="phoneNum" id="phoneNum"/>
             <br><br>
             <input type="submit" name="submit" id="btnSubmit" value="Submit" />
-
             <p>
-                    <a href="index.php">Cancel</a>
-                </p>
+                <a href="index.php">Cancel</a>
+            </p>
         </fieldset>
     </form>
 
