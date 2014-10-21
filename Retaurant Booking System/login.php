@@ -6,8 +6,8 @@
 
     //need to be add after a logout function is done
     //if(!empty($_SESSION['email'])){
-    //    header("Location: index.php");
-    //}
+  //      header("Location: index.php");
+ //   }
 
     if (isset($_POST['submit'])){
         $email = $_POST['email'];

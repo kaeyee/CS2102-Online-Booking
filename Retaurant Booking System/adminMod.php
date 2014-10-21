@@ -6,8 +6,10 @@
 ?>
 
 <script type="text/javascript">
-    function editRow() {
-        window.location.href = "index.php";
+    function editRow(id) {
+        $url = "edit.php?ID=";
+        $url = $url + id;
+        window.location.href = $url;
     };
 
     function deleteRow() {
@@ -70,13 +72,14 @@
                 $Location         . '</td><td align="left">' .
                 $Remark           . '</td><td align="left">' .
                 $Created_On       . '</td><td align="left">';
-                echo '<input type="submit" name="submit" id="editBTN" value="Edit" onclick="editRow()" />';
-                echo '<input type="submit" name="submit" id="deleteBTN" value="Delete" onclick="deleteRow()"/>';
+                echo '<input type="submit" name="edit" id= "edit" value="Edit" onclick= "editRow()" />'; //still need to access to current $B_Id on the button
+                echo '<input type="submit" name="delete" id="delete" value="Delete" onclick= "deleteRow()" />';
                 echo '</tr>';
         }
         echo '</table>';
          
      }
+
     ?>
         
     </body>
