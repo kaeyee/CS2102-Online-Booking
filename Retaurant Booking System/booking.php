@@ -100,7 +100,7 @@
             <br><br>
             <label for="remark">Remark: </label>
             <textarea name="remark" id="txtremark" rows="5" cols="40" onkeyup="textCounter(this.form.remark, this.form.countDisplay)" onkeydown="textCounter(this.form.remark, this.form.countDisplay)"></textarea>
-            <input name="countDisplay" type="text" size="3" value="80" readonly /> Characters Remaining
+            <input name="countDisplay" type="text" size="3" value="80" disabled /> Characters Remaining
             <br><br>
             <input type="submit" value="Submit" name="submit" id="submit"/>
         </fieldset>
