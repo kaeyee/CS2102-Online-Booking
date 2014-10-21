@@ -14,7 +14,7 @@
                 <p> <a href="/booking.php"> Book Tables here!</a></p>
                 <p> <a href="/logout.php"> Log out here!</a></p>
                 <br />
-                 <p> <a href="/adminEdit.php"> Admin edit</a></p>
+                 <p> <a href="/adminMod.php"> Admin edit</a></p>
             </div>
         </div>
     </body>

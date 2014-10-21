@@ -21,7 +21,7 @@
             </tr>';
             
             while($row = mysqli_fetch_array($response)){
-                echo'<tr><td align="left">' .
+                echo'<tr><td align="left" id="B_Id">' .//used to identify rows
                 $row['B_Id'] . '</td><td align="left">' .
                 $row['Email_Address']    . '</td><td align="left">' .
                 $row['Time']     . '</td><td align="left">' .
@@ -30,25 +30,43 @@
                 $row['Location']  . '</td><td align="left">' .
                 $row['Remark']      . '</td><td align="left">' .
                 $row['Created_On']    . '</td><td align="left">';
-
+                echo '<input type="submit" name="submit" id="editBTN" value="Edit" onclick="editRow()" />';
+                echo '<input type="submit" name="submit" id="deleteBTN" value="Delete" onclick="deleteRow()"/>';
                 echo '</tr>';
             }
 
             echo '</table>';
             
-        }
-        
-        /*else{
+        }else{
             echo "couldn't connect to database";
             echo mysqli_error($databaseConnection);
-        }*/
+        }
 ?>
+
+<script type="text/javascript">
+    function editRow() {
+        window.location.href = "index.php";
+    };
+
+    function deleteRow(){
+        window.location.href = "index.php";
+    };
+
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <title></title>
+        <style type="text/css">
+            td {
+                border:  1px solid black;
+            
+            }
+            
+            
+        </style>
     </head>
     <body>
         
