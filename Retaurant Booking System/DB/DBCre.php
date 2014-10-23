@@ -3,7 +3,7 @@
 
     define('DB_NAME', 'cs2102');
     define('DB_USER', 'root');
-    define('DB_PASSWORD', 'pass@1234');
+    define('DB_PASSWORD', '');
     define('DB_HOST', 'localhost');
 
     //define('DEFAULT_ADMIN_USERNAME', 'admin');

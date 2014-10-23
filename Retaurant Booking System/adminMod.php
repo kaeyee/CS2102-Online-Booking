@@ -12,8 +12,10 @@
         window.location.href = $url;
     };
 
-    function deleteRow() {
-        window.location.href = "index.php";
+    function deleteRow(id) {
+        $url = "delete.php?ID=";
+        $url = $url + id;
+        window.location.href = $url;
     };
 </script>
 
@@ -62,7 +64,7 @@
                 <td align="left"><b>Created_On</b></td>
             </tr>'; 
         
-        while( $statement -> fetch()){
+        while($statement -> fetch()){
             echo'<tr><td align="left">' .
                 $B_Id             . '</td><td align="left">' .
                 $Email_Address    . '</td><td align="left">' .
@@ -72,8 +74,8 @@
                 $Location         . '</td><td align="left">' .
                 $Remark           . '</td><td align="left">' .
                 $Created_On       . '</td><td align="left">';
-                echo '<input type="submit" name="edit" id= "edit" value="Edit" onclick= "editRow()" />'; //still need to access to current $B_Id on the button
-                echo '<input type="submit" name="delete" id="delete" value="Delete" onclick= "deleteRow()" />';
+                echo '<input type="submit" name="edit" id= "'.$B_Id.'" value="Edit" onclick= "editRow(id)" />'; 
+                echo '<input type="submit" name="delete" id= "'.$B_Id.'" value="Delete" onclick= "deleteRow(id)" />';
                 echo '</tr>';
         }
         echo '</table>';
