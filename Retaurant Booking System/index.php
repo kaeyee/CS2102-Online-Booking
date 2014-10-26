@@ -14,7 +14,8 @@
                 <p> <a href="/logout.php"> Log out here!</a></p>
                 <br />
                 <p> <a href="/userMod.php"> User edit</a></p>
-                 <p> <a href="/adminMod.php"> Admin edit</a></p>
+                <p> <a href="/adminMod.php"> Admin edit</a></p>
+                <p> <a href="/report.php">Report</a></p>
             </div>
         </div>
 <?php

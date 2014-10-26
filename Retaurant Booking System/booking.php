@@ -17,7 +17,6 @@
         $email = $_SESSION['email'];
         $location = $_POST['location'];
         $date = $_POST['date'];
-
         $time = $_POST['time'];
         $numTable = $_POST['numTable'];
         $remark = $_POST['remark'];
