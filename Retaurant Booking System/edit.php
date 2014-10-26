@@ -15,7 +15,7 @@
      $findStatement -> bind_param('i', $UID);
      $findStatement -> execute();
      $findStatement -> store_result();
-     $findStatement -> bind_result($b_id,$r_email,$time,$date,$no_pax,$location,$remark,$created_on);
+     $findStatement -> bind_result($b_id,$r_email,$time,$date,$no_table,$location,$remark,$created_on);
      $findStatement -> fetch();
      
 
@@ -29,18 +29,18 @@
     if (isset($_POST['submit'])){
         $ud_time = $_POST["time"];
         $ud_date = $_POST["date"];
-        $ud_no_pax = $_POST["numPax"];
+        $ud_no_table = $_POST["numTable"];
         $ud_location = $_POST["location"];
         $ud_remark = $_POST["remark"];
 
         $updateQuery= "UPDATE booking_record SET Time = ?, 
                                            Date = ?, 
-                                           No_Pax = ?,
+                                           No_Table = ?,
                                            Location = ?,
                                            Remark = ? WHERE B_Id ='$b_id'";
 
         $updateStatement = $databaseConnection -> prepare($updateQuery);
-        $updateStatement -> bind_param('isiss', $ud_time, $ud_date, $ud_no_pax, $ud_location, $ud_remark);
+        $updateStatement -> bind_param('isiss', $ud_time, $ud_date, $ud_no_table, $ud_location, $ud_remark);
         $updateStatement -> execute();
         $updateStatement -> store_result();
         $updateWasSuccessful = $updateStatement->affected_rows == 1 ? true : false;
@@ -61,14 +61,13 @@
 <?php
          echo '<table align="left" cellspacing="5" cellpadding="8">
             <tr>
-                <td align="left"><b>B_Id</b></td>
-                <td align="left"><b>Email_Address</b></td>
+                <td align="left"><b>BId</b></td>
+                <td align="left"><b>Email Address</b></td>
                 <td align="left"><b>Time</b></td>
                 <td align="left"><b>Date</b></td>
-                <td align="left"><b>No_Pax</b></td>
+                <td align="left"><b>No Table</b></td>
                 <td align="left"><b>Location</b></td>
                 <td align="left"><b>Remark</b></td>
-                <td align="left"><b>Created_On</b></td>
             </tr>'; 
 
         echo'<tr><td align="left">' .
@@ -76,10 +75,9 @@
                 $r_email    . '</td><td align="left">' .
                 $time             . '</td><td align="left">' .
                 $date             . '</td><td align="left">' .
-                $no_pax           . '</td><td align="left">' .
+                $no_table           . '</td><td align="left">' .
                 $location         . '</td><td align="left">' .
-                $remark           . '</td><td align="left">' .
-                $created_on       . '</td><td align="left">';
+                $remark           . '</td><td align="left">' ;
     echo '</tr>';
 ?>
 <div id="main">
@@ -122,8 +120,8 @@
                 <option value="1900">19:00</option>
             </select>
             <br><br>
-            <label for="numTable">No. of Pax: </label>
-            <select name="numPax" id="numPax">
+            <label for="numTable">No. of Table: </label>
+            <select name="numTable" id="numTable">
                 <?php
                     for($i=1;$i<=15;$i++){
                         echo "<option value=\"".$i."\">".$i."</option><br>";
@@ -161,8 +159,8 @@
             if ($("#time").val().length == 0) {
                 message = message + "Booking time is required.\n";
             }
-            if ($("#numPax").val().length == 0) {
-                message = message + "No. of Pax is required.\n";
+            if ($("#numTable").val().length == 0) {
+                message = message + "No. of Table is required.\n";
             }
 
             if (message.length > 0) {
