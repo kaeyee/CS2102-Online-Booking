@@ -17,7 +17,7 @@
         </div>';
     }
     else {
-        echo "Hi,".$_SESSION['lName'];
+        echo "Hi, ".$_SESSION['lName'];
         echo "<br>";
         echo "<div>
                     &nbsp;
