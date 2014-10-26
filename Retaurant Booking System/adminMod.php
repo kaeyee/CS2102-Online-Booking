@@ -30,22 +30,6 @@
             $url = $url + id;
             window.location.href = $url;
         }
-        //     $(document).ready(function () {
-        //   $(".delete").click(function(){
-        //    var parent = $(this).closest('tr');
-        // var del_id = element.attr("id");
-        // var info = 'id=' + id;
-        // if (confirm("Sure you want to delete this update? There is NO undo!")) {
-        //   $.ajax({
-        //     type: "POST",
-        //   url: "delete.php",
-        //                data: info,
-        //              success: function () {
-        //            }
-        //      });
-        //    $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast").animate({ opacity: "hide" }, "slow");
-        //}
-        //        return false    ;
     };
 </script>
 
@@ -68,7 +52,7 @@
     <body>
         <form id="searchForm" action="adminMod.php" method="post">
             <fieldset>
-                <legend>Search for Booking Record based on Email</legend>
+                <legend>Search for Booking Record based on Email or Location</legend>
                 Email: <input type="text" id="email" name="email"> 
                 <br>
                 <br>
@@ -96,7 +80,11 @@
     if(isset($_POST['submit'])){
         $emailSubmitted = trim($_POST['email']);
         $locationSubmitted = $_POST['location'];
-
+        if($emailSubmitted == "" && $locationSubmitted == ""){
+            echo "Please fill in at least 1 field!";
+        }
+        
+        else{
         if($emailSubmitted != "" && $locationSubmitted != ""){
             $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ? AND Location = ?";
             $statement = $databaseConnection -> prepare($query);
@@ -146,9 +134,9 @@
                 echo '</tr>';
         }
         echo '</table>';
-         
+        
      }
-
+    }
     ?>
         
     </body>
