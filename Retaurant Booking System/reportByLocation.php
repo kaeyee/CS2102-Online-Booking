@@ -27,8 +27,10 @@
         &nbsp;
     </div>
     <div>
-        Report for Booking Record:
+       <h1>Report for Booking Record:</h1> 
+        This report includes all the booking records of a location on a specific date.
     </div>
+    <hr/>
     <div>
         &nbsp;
     </div>
@@ -69,7 +71,6 @@
         <div>
         <table align="left" cellspacing="5" cellpadding="8">
             <tr>
-                <th>Location</th>
                 <th>Date</th>
                 <th>Time</th>
                 <th>Total Number of Table</th>
@@ -79,7 +80,6 @@
             {
                 $location = $_POST['location'];
                 $query = "SELECT
-	                            Location,
 	                            Date,
 	                            Time,
 	                            SUM(No_Table) As Total_Table
@@ -88,21 +88,18 @@
                             WHERE
 	                            Location =?
                             GROUP BY
-	                            Location,
 	                            Date,
 	                            Time
                             ORDER by
-	                            Location,
 	                            Time,
 	                            Date;";
 
                 $statement = $databaseConnection ->prepare($query);
                 $statement -> bind_param('s',  $location);
                 $statement -> execute();
-                $statement -> bind_result( $location, $date, $time, $totalTable);
+                $statement -> bind_result( $date, $time, $totalTable);
                 while($statement ->fetch()){
                     echo "<tr>";
-                    echo "<td align='center'>".$location."</td>";
                     echo "<td align='center'>".$date."</td>";
                     echo "<td align='center'>".$time."</td>";
                     echo "<td align='center'>".$totalTable."</td>";

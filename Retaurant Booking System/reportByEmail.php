@@ -27,8 +27,10 @@
         &nbsp;
     </div>
     <div>
-        Report for Booking Record:
+       <h1>Report for Booking Record:</h1> 
+        This report includes all the booking records of a specific customer on each date and each location.
     </div>
+    <hr/>
     <div>
         &nbsp;
     </div>

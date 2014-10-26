@@ -27,11 +27,10 @@
         &nbsp;
     </div>
     <div>
-        Report for Booking Record:
+       <h1>Report for Booking Record:</h1> 
+        This report includes all the booking records of customers on each date and each location.
     </div>
-    <div>
-        &nbsp;
-    </div>
+    <hr/>
     <div>
         <div>
         <table align="left" cellspacing="5" cellpadding="8">
