@@ -61,13 +61,32 @@
             td {
                 border:  1px solid black;
             }
+
+         
         </style>
     </head>
     <body>
         <form id="searchForm" action="adminMod.php" method="post">
             <fieldset>
                 <legend>Search for Booking Record based on Email</legend>
-                 Email: <input type="text" id="email" name="email">
+                Email: <input type="text" id="email" name="email"> 
+                <br>
+                <br>
+                <select name="location" id="location">
+                <option value="">Select Location</option>
+                <?php
+                $query = "SELECT location FROM restaurant";
+                $statement = $databaseConnection ->prepare($query);
+                $statement -> execute();
+                $result = $statement->get_result();
+                while($row = $result ->fetch_array(MYSQLI_NUM)) 
+                {
+                    foreach($row as $r){
+                       echo"<option value=\"".$r."\">".$r."</option><br>";
+                    }
+                }
+                ?>
+                </select>
                 <br><br>
                 <input type="submit" id="btnSubmit" name="submit" value="Submit"/>
             </fieldset>
@@ -76,10 +95,25 @@
     <?php
     if(isset($_POST['submit'])){
         $emailSubmitted = trim($_POST['email']);
-        
-        $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ?";
-        $statement = $databaseConnection -> prepare($query);
-        $statement -> bind_param('s', $emailSubmitted);
+        $locationSubmitted = $_POST['location'];
+
+        if($emailSubmitted != "" && $locationSubmitted != ""){
+            $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ? AND Location = ?";
+            $statement = $databaseConnection -> prepare($query);
+            $statement -> bind_param('ss', $emailSubmitted, $locationSubmitted);
+        }else if($emailSubmitted != "" && $locationSubmitted == ""){
+            $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ?";
+            $statement = $databaseConnection -> prepare($query);
+            $statement -> bind_param('s', $emailSubmitted);
+        }else if($emailSubmitted == "" && $locationSubmitted != ""){
+            $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Location = ?";
+            $statement = $databaseConnection -> prepare($query);
+            $statement -> bind_param('s', $locationSubmitted);
+        }
+
+        //$query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ? AND Location = ?";
+       // $statement = $databaseConnection -> prepare($query);
+        //$statement -> bind_param('ss', $emailSubmitted, $locationSubmitted);
         $statement -> execute();
         $statement -> bind_result($B_Id, $Email_Address, $Time, $Date, $No_Table, $Location, $Remark, $Created_On);
        
