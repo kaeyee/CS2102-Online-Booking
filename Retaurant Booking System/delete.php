@@ -22,7 +22,8 @@
      $deleteWasSuccessful = $statement->affected_rows == 1 ? true : false;
      
      if($deleteWasSuccessful == 1){
-       header("Location: adminMod.php");
+       echo "Deleted Sucessfully";
+       echo "<script>setTimeout(\"location.href = 'userMod.php';\",1000);</script>";
      }
      
   

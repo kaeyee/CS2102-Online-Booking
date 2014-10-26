@@ -49,6 +49,7 @@
         if ($updateWasSuccessful)
         {
             echo "Edit Successfully!";
+            echo "<script>setTimeout(\"location.href = 'userMod.php';\",1000);</script>";
         }
         else{
             echo "Fail";
