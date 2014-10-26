@@ -14,6 +14,6 @@
     <body>
         <div>
             <div>
-                <p> <a href="/index.php"> CKY Restaurant</a></p>
+                <p> <a href="/index.php"> <img src="CKY logo.png" alt="CKY LOGO"/></a></p>
             </div>
         </div>
