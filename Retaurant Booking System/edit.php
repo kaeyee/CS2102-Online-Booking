@@ -35,7 +35,6 @@
         $ud_remark = $_POST["remark"];
         $ModifieddOn = date('Y-m-d H:i:s');
 
-
         //get number of tables from the location entered
         $getTableQuery = "SELECT No_Tables FROM restaurant WHERE location=?";
         $getTableStatement = $databaseConnection -> prepare($getTableQuery);
@@ -45,7 +44,6 @@
         $getTableStatement -> bind_result($maxTable);
         $getTableStatement -> fetch();
 
-        
         //get previous location
         $getPreviousLocation = "SELECT Location FROM booking_record WHERE B_Id = ?";
         $getPreviousLocationStatement = $databaseConnection -> prepare($getPreviousLocation);
@@ -54,7 +52,6 @@
         $getPreviousLocationStatement -> store_result();
         $getPreviousLocationStatement -> bind_result($previousLocation);
         $getPreviousLocationStatement -> fetch();
-
 
         if($ud_time == 1130 || $ud_time == 1200 || $ud_time == 1230){
             $checkBookedTableQuery = "SELECT SUM(No_Table) FROM booking_record WHERE (Time=1130 or Time=1200 or Time=1230) AND location =? AND Date =?";
@@ -70,7 +67,6 @@
         $checkBookedTableStatement -> store_result();
         $checkBookedTableStatement -> bind_result($takenTable);
         $checkBookedTableStatement -> fetch();
-
 
         if($previousLocation === $ud_location){
             //get number of tables from the previous location
@@ -115,7 +111,6 @@
             $ModifieddOn = date('Y-m-d H:i:s');
 
             $insert_edit_query= "INSERT INTO edit (B_Id, Email_Address, Modified_On) VALUES(?, ?, ?) ";
-
             $insert_edit_Statement = $databaseConnection -> prepare($insert_edit_query);
             $insert_edit_Statement -> bind_param('iss', $b_id, $r_email, $ModifieddOn);
             $insert_edit_Statement -> execute();
@@ -151,9 +146,7 @@
     echo '</tr>';
 ?>
 <div id="main">
-
     <h1>Fill in the following to update your booking</h1>
-
 
     <form id="editBooking" action="edit.php?ID=<?php echo "$UID" ?>" method="post">
         <fieldset>
@@ -166,8 +159,7 @@
                 $statement = $databaseConnection ->prepare($query);
                 $statement -> execute();
                 $result = $statement->get_result();
-                while($row = $result ->fetch_array(MYSQLI_NUM)) 
-                {
+                while($row = $result ->fetch_array(MYSQLI_NUM)){
                     foreach($row as $r){
                        echo"<option value=\"".$r."\">".$r."</option><br>";
                     }

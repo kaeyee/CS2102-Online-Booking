@@ -15,7 +15,6 @@
         $statement -> bind_param('s', $emailSubmitted);
         $statement -> execute();
         $statement -> bind_result($B_Id, $Email_Address, $Time, $Date, $No_Table, $Location, $Remark, $Created_On);
-
        
             // create table's titles
             echo '<table align="left" cellspacing="5" cellpadding="8">
@@ -44,8 +43,6 @@
                 echo '</tr>';
         }
         echo '</table>';
-
-
 ?>
 <script type="text/javascript">
     function editRow(id) {
@@ -56,7 +53,6 @@
 </script>
 
 <script type="text/javascript">
-
     function deleteRow(id) {
         if (confirm("Sure you want to delete this update? There is NO undo!")) {
             $url = "delete.php?ID=";
