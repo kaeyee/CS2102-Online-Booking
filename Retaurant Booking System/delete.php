@@ -7,9 +7,8 @@
    if(empty($_SESSION['email'])){
        header("Location: index.php");
     }
- //   if($_POST['id'])
+    $isAdmin = $_SESSION['isAdmin'];
 
-   // $id=$_POST['id'];
     $id = intval($_GET['ID']); 
     echo $id;
     $query = "DELETE FROM booking_record where B_Id=?";
@@ -23,7 +22,11 @@
      
      if($deleteWasSuccessful == 1){
        echo "Deleted Sucessfully";
+       if($isAdmin==1){
        echo "<script>setTimeout(\"location.href = 'adminMod.php';\",1000);</script>";
+       }
+       else
+       echo "<script>setTimeout(\"location.href = 'userMod.php';\",1000);</script>";
      }
      
   

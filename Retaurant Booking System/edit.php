@@ -49,7 +49,11 @@
         if ($updateWasSuccessful)
         {
             echo "Edit Successfully!";
-            echo "<script>setTimeout(\"location.href = 'adminMod.php';\",1000);</script>";
+            if($isAdmin==1){
+       echo "<script>setTimeout(\"location.href = 'adminMod.php';\",1000);</script>";
+            }
+       else{
+       echo "<script>setTimeout(\"location.href = 'userMod.php';\",1000);</script>";}
         }
         else{
             echo "Fail";
@@ -148,7 +152,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var message = "";
-
+        var today = new Date();
+        today.setDate(today.getDate() + 1);
+        var d= today.toISOString().split('T')[0];
+        $("#txtDate")[0].setAttribute('min', d);
         $("#editBooking").submit(function (event) {
             if ($("#location").val().length == 0) {
                 message = message + "Location is required.\n";
