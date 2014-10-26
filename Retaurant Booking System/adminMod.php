@@ -5,22 +5,47 @@
     include("Includes/header.php");
 ?>
 
+
 <script type="text/javascript">
     function editRow(id) {
         $url = "edit.php?ID=";
         $url = $url + id;
         window.location.href = $url;
     };
+</script>
+
+<script type="text/javascript">
 
     function deleteRow(id) {
-        $url = "delete.php?ID=";
-        $url = $url + id;
-        window.location.href = $url;
+        if (confirm("Sure you want to delete this update? There is NO undo!")) {
+            $url = "delete.php?ID=";
+            $url = $url + id;
+            window.location.href = $url;
+        }
+        //     $(document).ready(function () {
+        //   $(".delete").click(function(){
+        //    var parent = $(this).closest('tr');
+        // var del_id = element.attr("id");
+        // var info = 'id=' + id;
+        // if (confirm("Sure you want to delete this update? There is NO undo!")) {
+        //   $.ajax({
+        //     type: "POST",
+        //   url: "delete.php",
+        //                data: info,
+        //              success: function () {
+        //            }
+        //      });
+        //    $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast").animate({ opacity: "hide" }, "slow");
+        //}
+        //        return false    ;
     };
 </script>
 
+
 <!DOCTYPE html>
 <html lang="en">
+
+
     <head>
         <meta charset="utf-8" />
         <title></title>
@@ -75,7 +100,8 @@
                 $Remark           . '</td><td align="left">' .
                 $Created_On       . '</td><td align="left">';
                 echo '<input type="submit" name="edit" id= "'.$B_Id.'" value="Edit" onclick= "editRow(id)" />'; 
-                echo '<input type="submit" name="delete" id= "'.$B_Id.'" value="Delete" onclick= "deleteRow(id)" />';
+                echo '<input type="submit" name="delete" id= "'.$B_Id.'" value="Delete" onclick= "deleteRow(id)"/>';
+               // <td><input id="'.$B_Id.'" class="delete" type="button" value="Delete" /></td>
                 echo '</tr>';
         }
         echo '</table>';
