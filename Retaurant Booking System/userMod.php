@@ -49,6 +49,24 @@
 
 
 ?>
+<script type="text/javascript">
+    function editRow(id) {
+        $url = "edit.php?ID=";
+        $url = $url + id;
+        window.location.href = $url;
+    };
+</script>
+
+<script type="text/javascript">
+
+    function deleteRow(id) {
+        if (confirm("Sure you want to delete this update? There is NO undo!")) {
+            $url = "delete.php?ID=";
+            $url = $url + id;
+            window.location.href = $url;
+        }
+    }
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
