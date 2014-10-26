@@ -32,6 +32,7 @@
         $ud_no_table = $_POST["numTable"];
         $ud_location = $_POST["location"];
         $ud_remark = $_POST["remark"];
+        $ModifieddOn = date('Y-m-d H:i:s');
 
         $updateQuery= "UPDATE booking_record SET Time = ?, 
                                            Date = ?, 
@@ -58,6 +59,17 @@
         else{
             echo "Fail";
         }
+        $ModifieddOn = date('Y-m-d H:i:s');
+
+        $insert_edit_query= "INSERT INTO edit (B_Id, Email_Address, Modified_On) VALUES(?, ?, ?) ";
+
+        $insert_edit_Statement = $databaseConnection -> prepare($insert_edit_query);
+        $insert_edit_Statement -> bind_param('iss', $b_id, $r_email, $ModifieddOn);
+        $insert_edit_Statement -> execute();
+        $insert_edit_Statement -> store_result();
+        $insertWasSuccessful = $insert_edit_Statement->affected_rows == 1 ? true : false;
+        $insert_edit_Statement -> fetch();
+
 
     }
 
