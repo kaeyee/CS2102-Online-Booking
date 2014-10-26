@@ -17,24 +17,53 @@
         $email = $_SESSION['email'];
         $location = $_POST['location'];
         $date = $_POST['date'];
+
         $time = $_POST['time'];
-        $numPax = $_POST['numPax'];
+        $numTable = $_POST['numTable'];
         $remark = $_POST['remark'];
         $createdOn = date('Y-m-d H:i:s');
 
-        $recordQuery = "INSERT INTO booking_record(Email_Address,Time, Date, No_Pax, Location, Remark, Created_On) VALUES (?, ?, ?, ?, ?, ?, ?) ";
-        $recordStatement = $databaseConnection -> prepare($recordQuery);
-        $recordStatement -> bind_param('sisisss', $email, $time, $date, $numPax, $location, $remark, $createdOn);
-        $recordStatement -> execute();
-        $recordStatement -> store_result();
+        $getTableQuery = "SELECT No_Tables FROM restaurant WHERE location=?";
+        $getTableStatement = $databaseConnection -> prepare($getTableQuery);
+        $getTableStatement -> bind_param('s',  $location);
+        $getTableStatement -> execute();
+        $getTableStatement -> store_result();
+        $getTableStatement -> bind_result($maxTable);
+        $getTableStatement -> fetch();
 
-        $creationWasSuccessful = $recordStatement->affected_rows == 1 ? true : false;
-        if ($creationWasSuccessful)
-        {
-            echo "Successful!";
+        if($time == 1130 || $time == 1200 || $time == 1230){
+            $checkBookedTableQuery = "SELECT SUM(No_Table) FROM booking_record WHERE (Time=1130 or Time=1200 or Time=1230) AND location =? AND Date =?";
+        }
+        else if($time == 1800 || $time == 1830 || $time == 1900){
+            $checkBookedTableQuery = "SELECT SUM(No_Table) FROM booking_record WHERE (Time=1800 or Time=1830 or Time=1900) AND location =? AND Date =?";
+        }
+        $checkBookedTableStatement = $databaseConnection -> prepare($checkBookedTableQuery);
+        $checkBookedTableStatement -> bind_param('ss', $location, $date);
+        $checkBookedTableStatement ->execute();
+        $checkBookedTableStatement -> store_result();
+        $checkBookedTableStatement -> bind_result($takenTable);
+        $checkBookedTableStatement -> fetch();
+
+        $availTable = $maxTable - $takenTable;
+
+        if($availTable >= $numTable){
+            $recordQuery = "INSERT INTO booking_record(Email_Address,Time, Date, No_Table, Location, Remark, Created_On) VALUES (?, ?, ?, ?, ?, ?, ?) ";
+            $recordStatement = $databaseConnection -> prepare($recordQuery);
+            $recordStatement -> bind_param('sisisss', $email, $time, $date, $numTable, $location, $remark, $createdOn);
+            $recordStatement -> execute();
+            $recordStatement -> store_result();
+
+            $creationWasSuccessful = $recordStatement->affected_rows == 1 ? true : false;
+            if ($creationWasSuccessful)
+            {
+                header("Location:bookSuccess.php");
+            }
+            else{
+                header("Location:bookFail.php");
+            }
         }
         else{
-            echo "Fail";
+            echo "Sorry, we left with ". $availTable." available table(s) in this location.";
         }
     }
     ?>
@@ -89,10 +118,10 @@
                 <option value="1900">19:00</option>
             </select>
             <br><br>
-            <label for="numTable">No. of Pax: </label>
-            <select name="numPax" id="numPax">
+            <label for="numTable">No. of Table: </label>
+            <select name="numTable" id="numTable">
                 <?php
-                    for($i=1;$i<=15;$i++){
+                    for($i=1;$i<=5;$i++){
                         echo "<option value=\"".$i."\">".$i."</option><br>";
                     }
                 ?>
@@ -156,7 +185,7 @@
             if ($("#time").val().length == 0) {
                 message = message + "Booking time is required.\n";
             }
-            if ($("#numPax").val().length == 0) {
+            if ($("#numTable").val().length == 0) {
                 message = message + "No. of Pax is required.\n";
             }
             if (!IsEmail($("#txtEmail").val())) {

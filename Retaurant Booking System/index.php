@@ -1,12 +1,11 @@
 <?php
+    require_once ("Includes/session.php");
     require_once ("DB/DBCre.php");
     require_once ("DB/connectDB.php");
     include("Includes/header.php");
 ?>
     This is the main page
-<!DOCTYPE html>
-<html lang="en">
-    <body>
+
         <div>
             <div>
                 <p> <a href="/login.php"> Log In here!</a></p>
@@ -18,8 +17,6 @@
                  <p> <a href="/adminMod.php"> Admin edit</a></p>
             </div>
         </div>
-    </body>
-</html>
 <?php
     include ("Includes/footer.php");    
 
