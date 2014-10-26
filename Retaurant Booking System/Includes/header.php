@@ -11,7 +11,7 @@
          <link rel="icon" href="favicon.ico" type="image/x-icon">
         <script src="Script/jquery-1.10.2.min.js"></script>
     </head>
-    <body>
+    <body style="margin-bottom: 50px">
         <div>
             <div>
                 <p> <a href="/index.php"> <img src="CKY logo.png" alt="CKY LOGO"/></a></p>

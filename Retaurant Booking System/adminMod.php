@@ -47,7 +47,7 @@
     <body>
         <form id="searchForm" action="adminMod.php" method="post">
             <fieldset>
-                <legend>Search for Booking Record based on Email or Location</legend>
+                <legend>Search for Booking Record based on Email AND/OR Location (Results are ordered by date followed by time)</legend>
                 Email: <input type="text" id="email" name="email"> 
                 <br><br>
                 Location: <select name="location" id="location">
