@@ -9,7 +9,8 @@
     }
      $email = ($_SESSION['email']);
      
-     $UID = intval($_GET['ID']);            //the parameter is passed by entering the B_Id to the url
+     //the parameter is passed by entering the B_Id to the url
+     $UID = intval($_GET['ID']);            
      $findQuery ="SELECT * FROM booking_record where B_Id = ?";
      $findStatement = $databaseConnection -> prepare($findQuery);
      $findStatement -> bind_param('i', $UID);
@@ -18,8 +19,8 @@
      $findStatement -> bind_result($b_id,$r_email,$time,$date,$no_table,$location,$remark,$created_on);
      $findStatement -> fetch();
      
-
-     if(!($r_email == $email) ){                    //check whether the person is authorized to edit the item
+     //check whether the person is authorized to edit the item
+     if(!($r_email == $email) ){                    
        if(!is_admin()){
          alert("you are not authorized to edit!");
          header("Location: index.php");
@@ -34,46 +35,99 @@
         $ud_remark = $_POST["remark"];
         $ModifieddOn = date('Y-m-d H:i:s');
 
-        $updateQuery= "UPDATE booking_record SET Time = ?, 
-                                           Date = ?, 
-                                           No_Table = ?,
-                                           Location = ?,
-                                           Remark = ? WHERE B_Id ='$b_id'";
 
-        $updateStatement = $databaseConnection -> prepare($updateQuery);
-        $updateStatement -> bind_param('isiss', $ud_time, $ud_date, $ud_no_table, $ud_location, $ud_remark);
-        $updateStatement -> execute();
-        $updateStatement -> store_result();
-        $updateWasSuccessful = $updateStatement->affected_rows == 1 ? true : false;
-        $updateStatement -> fetch();
+        //get number of tables from the location entered
+        $getTableQuery = "SELECT No_Tables FROM restaurant WHERE location=?";
+        $getTableStatement = $databaseConnection -> prepare($getTableQuery);
+        $getTableStatement -> bind_param('s',  $ud_location);
+        $getTableStatement -> execute();
+        $getTableStatement -> store_result();
+        $getTableStatement -> bind_result($maxTable);
+        $getTableStatement -> fetch();
 
-        if ($updateWasSuccessful)
-        {
-            echo "Edit Successfully!";
-            if($isAdmin==1){
-       echo "<script>setTimeout(\"location.href = 'adminMod.php';\",1000);</script>";
+        
+        //get previous location
+        $getPreviousLocation = "SELECT Location FROM booking_record WHERE B_Id = ?";
+        $getPreviousLocationStatement = $databaseConnection -> prepare($getPreviousLocation);
+        $getPreviousLocationStatement -> bind_param('i', $UID);
+        $getPreviousLocationStatement -> execute();
+        $getPreviousLocationStatement -> store_result();
+        $getPreviousLocationStatement -> bind_result($previousLocation);
+        $getPreviousLocationStatement -> fetch();
+
+
+        if($ud_time == 1130 || $ud_time == 1200 || $ud_time == 1230){
+            $checkBookedTableQuery = "SELECT SUM(No_Table) FROM booking_record WHERE (Time=1130 or Time=1200 or Time=1230) AND location =? AND Date =?";
+            $isLunch = true;
+        }else if($ud_time == 1800 || $ud_time == 1830 || $ud_time == 1900){
+            $checkBookedTableQuery = "SELECT SUM(No_Table) FROM booking_record WHERE (Time=1800 or Time=1830 or Time=1900) AND location =? AND Date =?";
+            $isLunch = false;
+        }
+
+        $checkBookedTableStatement = $databaseConnection -> prepare($checkBookedTableQuery);
+        $checkBookedTableStatement -> bind_param('ss', $ud_location, $ud_date);
+        $checkBookedTableStatement ->execute();
+        $checkBookedTableStatement -> store_result();
+        $checkBookedTableStatement -> bind_result($takenTable);
+        $checkBookedTableStatement -> fetch();
+
+
+        if($previousLocation === $ud_location){
+            //get number of tables from the previous location
+            $getPreviousTable = "SELECT No_Table FROM booking_record WHERE B_Id = ?";
+            $getPreviousTableStatement = $databaseConnection -> prepare($getPreviousTable);
+            $getPreviousTableStatement -> bind_param('i', $UID);
+            $getPreviousTableStatement -> execute();
+            $getPreviousTableStatement -> store_result();
+            $getPreviousTableStatement -> bind_result($previousTable);
+            $getPreviousTableStatement -> fetch();
+
+             $availTable = $maxTable - $takenTable + $previousTable;
+        }else{
+             $availTable = $maxTable - $takenTable ;
+        }
+
+        if($availTable >= $ud_no_table){
+            $updateQuery= "UPDATE booking_record SET Time = ?, 
+                                               Date = ?, 
+                                               No_Table = ?,
+                                               Location = ?,
+                                               Remark = ? WHERE B_Id ='$b_id'";
+
+            $updateStatement = $databaseConnection -> prepare($updateQuery);
+            $updateStatement -> bind_param('isiss', $ud_time, $ud_date, $ud_no_table, $ud_location, $ud_remark);
+            $updateStatement -> execute();
+            $updateStatement -> store_result();
+            $updateWasSuccessful = $updateStatement->affected_rows == 1 ? true : false;
+            $updateStatement -> fetch();
+
+            if ($updateWasSuccessful){
+                echo "Edit Successfully!";
+                if($isAdmin==1){
+                     echo "<script>setTimeout(\"location.href = 'adminMod.php';\",1000);</script>";
+                }else{
+                     echo "<script>setTimeout(\"location.href = 'userMod.php';\",1000);</script>";
+                }
+            }else{
+                echo "Fail";
             }
-       else{
-       echo "<script>setTimeout(\"location.href = 'userMod.php';\",1000);</script>";}
+
+            $ModifieddOn = date('Y-m-d H:i:s');
+
+            $insert_edit_query= "INSERT INTO edit (B_Id, Email_Address, Modified_On) VALUES(?, ?, ?) ";
+
+            $insert_edit_Statement = $databaseConnection -> prepare($insert_edit_query);
+            $insert_edit_Statement -> bind_param('iss', $b_id, $r_email, $ModifieddOn);
+            $insert_edit_Statement -> execute();
+            $insert_edit_Statement -> store_result();
+            $insertWasSuccessful = $insert_edit_Statement->affected_rows == 1 ? true : false;
+            $insert_edit_Statement -> fetch();
+        }else{
+            echo "Sorry, we left with ". $availTable." available table(s) in this location.";
         }
-        else{
-            echo "Fail";
-        }
-        $ModifieddOn = date('Y-m-d H:i:s');
-
-        $insert_edit_query= "INSERT INTO edit (B_Id, Email_Address, Modified_On) VALUES(?, ?, ?) ";
-
-        $insert_edit_Statement = $databaseConnection -> prepare($insert_edit_query);
-        $insert_edit_Statement -> bind_param('iss', $b_id, $r_email, $ModifieddOn);
-        $insert_edit_Statement -> execute();
-        $insert_edit_Statement -> store_result();
-        $insertWasSuccessful = $insert_edit_Statement->affected_rows == 1 ? true : false;
-        $insert_edit_Statement -> fetch();
-
-
     }
-
 ?>
+
 <?php
          echo '<table align="left" cellspacing="5" cellpadding="8">
             <tr>
@@ -139,7 +193,7 @@
             <label for="numTable">No. of Table: </label>
             <select name="numTable" id="numTable">
                 <?php
-                    for($i=1;$i<=15;$i++){
+                    for($i=1;$i<=5;$i++){
                         echo "<option value=\"".$i."\">".$i."</option><br>";
                     }
                 ?>
