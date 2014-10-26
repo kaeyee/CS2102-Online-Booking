@@ -50,7 +50,7 @@
                 <legend>Search for Booking Record based on Email or Location</legend>
                 Email: <input type="text" id="email" name="email"> 
                 <br><br>
-                <select name="location" id="location">
+                Location: <select name="location" id="location">
                 <option value="">Select Location</option>
                 <?php
                 $query = "SELECT location FROM restaurant";
@@ -78,22 +78,22 @@
             echo "Please fill in at least 1 field!";
         }else{
             if($emailSubmitted != "" && $locationSubmitted != ""){
-                $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ? AND Location = ?";
+                $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ? AND Location = ? ORDER BY DATE, TIME";
                 $statement = $databaseConnection -> prepare($query);
                 $statement -> bind_param('ss', $emailSubmitted, $locationSubmitted);
             }else if($emailSubmitted != "" && $locationSubmitted == ""){
-                $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ?";
+                $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ? ORDER BY DATE, TIME";
                 $statement = $databaseConnection -> prepare($query);
                 $statement -> bind_param('s', $emailSubmitted);
             }else if($emailSubmitted == "" && $locationSubmitted != ""){
-                $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Location = ?";
+                $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Location = ?  ORDER BY DATE, TIME";
                 $statement = $databaseConnection -> prepare($query);
                 $statement -> bind_param('s', $locationSubmitted);
             }
 
             $statement -> execute();
             $statement -> bind_result($B_Id, $Email_Address, $Time, $Date, $No_Table, $Location, $Remark, $Created_On);
-       
+            
             // create table's titles
             echo '<table align="left" cellspacing="5" cellpadding="8">
             <tr>
@@ -119,7 +119,6 @@
                     $Created_On       . '</td><td align="left">';
                     echo '<input type="submit" name="edit" id= "'.$B_Id.'" value="Edit" onclick= "editRow(id)" />'; 
                     echo '<input type="submit" name="delete" id= "'.$B_Id.'" value="Delete" onclick= "deleteRow(id)"/>';
-                   // <td><input id="'.$B_Id.'" class="delete" type="button" value="Delete" /></td>
                     echo '</tr>';
             }
             echo '</table>';
