@@ -83,7 +83,7 @@
             <input type="text" id="txtPhoneNum" name="phoneNum"/>
             <br><br>
             <label for="email">Email Address: </label>
-            <input type="text" id="txtEmail" name="email" disabled/>
+            <input type="text" id="txtEmail" name="email"/>
             <br><br>
             <label for="location">Location: </label>
             <select name="location" id="location">
@@ -154,10 +154,16 @@
             url: "/getDetails.php",
             dataType: "Json",
             success: function (result) {
-                $("#txtFName").val(result.fName);
-                $("#txtLName").val(result.lName);
-                $("#txtEmail").val(result.email);
-                $("#txtPhoneNum").val(result.phoneNum);
+                if(result.admin == 0){
+                    $("#txtFName").val(result.fName);
+                    $("#txtLName").val(result.lName);
+                    $("#txtEmail").val(result.email);
+                    $("#txtPhoneNum").val(result.phoneNum);
+                    $("#txtEmail").prop("disabled",true);
+                }
+                else{
+                    $("#txtEmail").prop("disabled",false);
+                }
             }
         });
 

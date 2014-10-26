@@ -4,17 +4,17 @@
     require_once ("DB/connectDB.php");
 
     $email = $_SESSION['email'];
-    $query = "SELECT First_Name, Last_Name, Phone_Number FROM user WHERE Email_Address =? LIMIT 1";
+    $query = "SELECT First_Name, Last_Name, Phone_Number,Is_Admin FROM user WHERE Email_Address =? LIMIT 1";
     $statement = $databaseConnection -> prepare($query);
     $statement -> bind_param('s', $email);
     $statement -> execute();
     $statement -> store_result();
 
     if($statement -> num_rows == 1){
-        $statement -> bind_result($fName, $lName, $phoneNum);
+        $statement -> bind_result($fName, $lName, $phoneNum, $admin);
         $statement -> fetch();
 
-        $arr = array('email'=> $email, 'fName'=> $fName, 'lName'=>$lName, 'phoneNum'=> $phoneNum);
+        $arr = array('email'=> $email, 'fName'=> $fName, 'lName'=>$lName, 'phoneNum'=> $phoneNum, 'admin'=>$admin);
     echo json_encode($arr);
     }
 ?>
