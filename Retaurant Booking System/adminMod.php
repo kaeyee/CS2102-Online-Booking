@@ -3,6 +3,24 @@
     require_once ("DB/DBCre.php");
     require_once ("DB/connectDB.php");
     include("Includes/header.php");
+
+    if(!$_SESSION['email']){
+        header("Location:login.php");
+    }
+
+    $emailSubmitted = $_SESSION['email'];
+
+    $query = "SELECT Is_Admin from user WHERE Email_Address = ?";
+    $statement = $databaseConnection -> prepare($query);
+        $statement -> bind_param('s', $emailSubmitted);
+        $statement -> execute();
+        $statement -> bind_result($Is_Admin);
+
+        if($statement -> fetch()){
+           if($Is_Admin == 0){
+                header("Location:index.php");
+            }
+        }
 ?>
 
 
