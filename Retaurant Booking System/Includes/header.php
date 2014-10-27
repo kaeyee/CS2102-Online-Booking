@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8" />
         <title>CKY Restaurant Online Booking</title>
-        <link href="Styles/StyleSheet.css" rel="stylesheet" type="text/css" />
+        <link href="Style/StyleSheet.css" rel="stylesheet" type="text/css" />
          <link rel="icon" href="favicon.ico" type="image/x-icon">
         <script src="Script/jquery-1.10.2.min.js"></script>
     </head>
