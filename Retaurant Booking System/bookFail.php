@@ -5,5 +5,7 @@
     include("Includes/header.php");
 ?>
 <div>
-    Booking Fail!
+    Booking Fail! Redirecting to Main Page in 3 seconds.
 </div>
+
+<script>setTimeout("location.href = 'index.php';",2000);</script>
