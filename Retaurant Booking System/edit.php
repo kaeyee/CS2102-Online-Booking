@@ -8,7 +8,8 @@
        header("Location: index.php");
     }
      $email = ($_SESSION['email']);
-     
+     $isAdmin = $_SESSION['isAdmin'];
+
      //the parameter is passed by entering the B_Id to the url
      $UID = intval($_GET['ID']);            
      $findQuery ="SELECT * FROM booking_record where B_Id = ?";
@@ -18,10 +19,10 @@
      $findStatement -> store_result();
      $findStatement -> bind_result($b_id,$r_email,$time,$date,$no_table,$location,$remark,$created_on);
      $findStatement -> fetch();
-     
+
      //check whether the person is authorized to edit the item
-     if(!($r_email == $email) ){                    
-             if($isAdmin==0){
+     if($isAdmin==0){       
+             if(!($r_email == $email)){
                   header("Location: editFail_authorized.php");
              }
      }

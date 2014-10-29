@@ -10,9 +10,11 @@
 </div>
 
 <?php
+    $isAdmin = $_SESSION['isAdmin'];
  if($isAdmin==1){
                      echo "<script>setTimeout(\"location.href = 'adminMod.php';\",1800);</script>";
-                }else{
+                }
+ else{
                      echo "<script>setTimeout(\"location.href = 'userMod.php';\",1800);</script>";
                 }
 ?>

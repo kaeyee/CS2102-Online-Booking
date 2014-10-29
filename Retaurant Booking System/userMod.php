@@ -9,8 +9,9 @@
     }
 
     $emailSubmitted = $_SESSION['email'];
-
-    $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ?";
+    
+    //added comaparison of date with today's date
+    $query = "SELECT B_Id, Email_Address, Time, Date, No_Table, Location, Remark, Created_On FROM booking_record WHERE Email_Address = ? AND Date > NOW() ";
         $statement = $databaseConnection -> prepare($query);
         $statement -> bind_param('s', $emailSubmitted);
         $statement -> execute();
