@@ -21,9 +21,18 @@
      
      //check whether the person is authorized to edit the item
      if(!($r_email == $email) ){                    
-       if(!is_admin()){
-         alert("you are not authorized to edit!");
-         header("Location: index.php");
+             if($isAdmin==0){
+                  header("Location: editFail_authorized.php");
+             }
+     }
+
+     //check whether the record has passed if the user is authorized
+     else{
+         $date1 = new DateTime("now");
+         $date2 = new DateTime($date);
+
+        if($date2<$date1){
+              header("Location: editFail_date.php");
         }
      }
 
