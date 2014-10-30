@@ -1,5 +1,20 @@
 body {
-    margin: 25px;
+    margin: 20px;
+}
+
+div#menutab > a {
+	background-color: #999;
+	color: #eee;
+	padding:12px 24px;
+	margin-right: 25px;
+	text-decoration: none;
+	border-radius: 5px;
+	transition: background 0.4s linear 0s, color 0.4s linear 0s;
+}
+
+div#menutab > a:hover {
+    background-color: #B40404;
+	color: #FFF;
 }
 
 .error{

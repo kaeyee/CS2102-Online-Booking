@@ -9,8 +9,8 @@
             <div>
                 <table>
                     <tr>
-                        <td style="width: 150px"><a href="/login.php">Log In</a></td>
-                        <td style="width: 150px"><a href="/signup.php">Sign up</a></td>
+                        <td><div id="menutab"><a href="/login.php">Log In</a></div></td>
+                        <td><div id="menutab"><a href="/signup.php">Sign up</a></div></td>
                     </tr>
                 </table>
             </div>
@@ -28,10 +28,10 @@
                 <div>
                     <table>
                         <tr>
-                            <td style="width: 150px"><a href="/booking.php">Make Reservation</a></td>
-                            <td style="width: 150px"><a href="/adminMod.php">Admin edit</a></td>
-                            <td style="width: 150px"><a href="/report.php">Report</a></td>
-                            <td style="width: 150px"><a href="/logout.php">Log out </a></td>
+                            <td><div id="menutab"><a href="/booking.php">Make Reservation</a></div></td>
+                            <td><div id="menutab"><a href="/adminMod.php">Admin edit</a></div></td>
+                            <td><div id="menutab"><a href="/report.php">Report</a></div></td>
+                            <td><div id="menutab"><a href="/logout.php">Log out</a></div></td>
                         </tr>
                     </table>
                 </div>
@@ -43,9 +43,9 @@
                 <div>
                     <table>
                         <tr>
-                            <td style="width: 150px"><a href="/booking.php">Make Reservation</a></td>
-                            <td style="width: 150px"><a href="/userMod.php">User edit</a></td>
-                            <td style="width: 150px"><a href="/logout.php">Log out</a></td>
+                            <td><div id="menutab"><a href="/booking.php">Make Reservation</a></div></td>
+                            <td><div id="menutab"><a href="/userMod.php">User edit</a></div></td>
+                            <td><div id="menutab"><a href="/logout.php">Log out</a></div></td>
                         </tr>
                     </table>
                 </div>

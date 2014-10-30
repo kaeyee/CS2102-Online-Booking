@@ -17,9 +17,9 @@
     <div>
         <table>
             <tr>
-                <td style="width: 150px"><a href="/generalReport.php">General Report</a></td>
-                <td style="width: 150px"><a href="/reportByEmail.php">Report by Email</a></td>
-                <td style="width: 150px"><a href="/reportByLocation.php">Report by Location</a></td>
+                <td><div id="menutab"><a href="/generalReport.php">General Report</a></div></td>
+                <td><div id="menutab"><a href="/reportByEmail.php">Report by Email</a></div></td>
+                <td><div id="menutab"><a href="/reportByLocation.php">Report by Location</a></div></td>
             </tr>
         </table>
     </div>
