@@ -8,9 +8,24 @@
        header("Location: index.php");
     }
     $isAdmin = $_SESSION['isAdmin'];
+    $email = ($_SESSION['email']);
+         //the parameter is passed by entering the B_Id to the url
+     $id = intval($_GET['ID']);          
+     $findQuery ="SELECT Email_Address FROM booking_record where B_Id = ?";
+     $findStatement = $databaseConnection -> prepare($findQuery);
+     $findStatement -> bind_param('i', $id);
+     $findStatement -> execute();
+     $findStatement -> store_result();
+     $findStatement -> bind_result($r_email);
+     $findStatement -> fetch();
 
-    $id = intval($_GET['ID']); 
-    echo $id;
+     //check whether the person is authorized to edit the item
+     if($isAdmin==0){       
+             if(!($r_email == $email)){
+                  header("Location: deleteFail.php");
+             }
+     }
+
     $query = "DELETE FROM booking_record where B_Id=?";
  
      $statement = $databaseConnection -> prepare($query);
