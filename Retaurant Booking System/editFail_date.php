@@ -5,7 +5,7 @@
     include("Includes/header.php");
 ?>
 <div>
-    This record has passed, It can't be edited! Redirecting to Edit Page in 3 seconds.
+    This record has expired. It can't be edited! Redirecting to Edit Page in 3 seconds.
     
 </div>
 

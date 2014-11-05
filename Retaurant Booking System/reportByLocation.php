@@ -90,9 +90,9 @@
                             GROUP BY
 	                            Date,
 	                            Time
-                            ORDER by
-	                            Time,
-	                            Date;";
+                            ORDER BY
+	                            Date,
+                                Time;";
 
                 $statement = $databaseConnection ->prepare($query);
                 $statement -> bind_param('s',  $location);
